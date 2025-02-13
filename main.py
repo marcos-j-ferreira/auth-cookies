@@ -36,6 +36,13 @@ def post_cookie():
         return jsonify(send['Status'])
     else:
         return jsonify(send['Erro'])
-    
+
+@app.route('/logout', methods=['GET'])
+
+def logout():
+    response = make_response(jsonify({'Success':'Logged out'}), 200)
+    response.delete_cookie('cookie')
+    return response
+
 if __name__== '__main__':
     app.run(debug=True)
