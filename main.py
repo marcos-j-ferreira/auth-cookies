@@ -22,8 +22,20 @@ def cookie():
     
     return response
 
+@app.route('/cookie', methods=['POST'])
+def post_cookie():
 
+    response = get_cookie('cookie')
+    
+    send = {
+        'Status': 'Usuário logado',
+        'Erro':'Usuário não logado'
+    }
 
-
+    if response:
+        return jsonify(send['Status'])
+    else:
+        return jsonify(send['Erro'])
+    
 if __name__== '__main__':
     app.run(debug=True)
