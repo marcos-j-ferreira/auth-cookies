@@ -43,7 +43,9 @@ def login():
     nome = result['user']
     senha = result['senha']
 
-    if nome == db['user'] and senha == db['senha']:
+    user = next((u for u in db['users'] if u['user'] == nome and u['senha'] == senha), None)
+
+    if user:
         response = make_response(jsonify({'success': 'Logged in'}), 200)
         response = set_cookie(response, 'cookie', data['cookie'], max_age=100)
         return response, 200
@@ -63,7 +65,7 @@ def cadastro():
     senha = result['senha']
 
     try:
-        new_id = len(db) + 1
+        new_id = len(db['users']) + 1
         
         db['users'].append({ 
             'id': new_id,
