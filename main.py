@@ -61,6 +61,11 @@ def cadastro():
     if not result or not result.get('user') or not result.get('senha'):
         return jsonify({'Erro':'Todos os Campos tem que ser preenchido'})
     
+    user = next((u for u in db['users'] if u['user'] == result['user']), None)
+
+    if user:
+        return jsonify({"Erro":"Nome já cadastrado"})
+    
     nome = result['user']
     senha = result['senha']
 
